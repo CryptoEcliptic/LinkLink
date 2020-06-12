@@ -23,7 +23,7 @@ namespace LinkedBit
             services.AddControllersWithViews();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
-                                              options.UseSqlServer(_configuration.GetConnectionString("EmpolyeeDbConnection")));
+                                              options.UseSqlServer(_configuration.GetConnectionString("LinkLinkDbConnection")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
