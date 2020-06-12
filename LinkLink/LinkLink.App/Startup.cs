@@ -1,6 +1,7 @@
 using LinkLink.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +23,13 @@ namespace LinkedBit
         {
             services.AddControllersWithViews();
 
+            //Register 
             services.AddDbContextPool<ApplicationDbContext>(options =>
                                               options.UseSqlServer(_configuration.GetConnectionString("LinkLinkDbConnection")));
+
+            //Register identity services
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                                .AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,10 +39,10 @@ namespace LinkedBit
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

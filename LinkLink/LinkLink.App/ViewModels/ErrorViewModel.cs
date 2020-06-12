@@ -1,6 +1,4 @@
-using System;
-
-namespace LinkedBit.Models
+namespace LinkLink.App.ViewModels
 {
     public class ErrorViewModel
     {
