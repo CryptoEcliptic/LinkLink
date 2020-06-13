@@ -53,12 +53,23 @@ namespace LinkLink.App.Controllers
         public async Task<JsonResult> IsExistingEmail(string email)
         {
             IdentityUser user = await this.userManager.FindByEmailAsync(email);
-            ;
+
             if (user == null)
             {
                 return Json(true);
             }
             return Json($"The email: {email} already exists!");
+        }
+
+        public async Task<JsonResult> IsExistingUsername(string username)
+        {
+            IdentityUser user = await this.userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return Json(true);
+            }
+            return Json($"User with username: {username} already exists!");
         }
     }
 }

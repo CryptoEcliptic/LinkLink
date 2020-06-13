@@ -10,6 +10,7 @@ namespace LinkLink.App.ViewModels.AccountViewModels
     public class UserRegisterBindingModel
     {
         private const string maxLengthErrorMessage = "The {0} should not exceed {1} characters!";
+        private const string minLengthErrorMessage = "The {0} should be at least {1} characters!";
         private const string passwordMismatchErrorMessage = "Password and confirmation password do not match.";
 
         [Required]
@@ -19,6 +20,8 @@ namespace LinkLink.App.ViewModels.AccountViewModels
 
         [Required]
         [MaxLength(32, ErrorMessage = maxLengthErrorMessage)]
+        [MinLength(3, ErrorMessage = minLengthErrorMessage)]
+        [Remote(action: "IsExistingUsername", controller: "Account")]
         public string Username { get; set; }
 
         [Required]
