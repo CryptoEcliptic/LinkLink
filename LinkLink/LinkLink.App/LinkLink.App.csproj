@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LinkLink.Data\LinkLink.Data.csproj" />
+    <ProjectReference Include="..\LinkLink.Services\LinkLink.Services.csproj" />
   </ItemGroup>
 
 </Project>
