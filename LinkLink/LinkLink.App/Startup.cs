@@ -30,6 +30,17 @@ namespace LinkedBit
             //Register identity services
             services.AddIdentity<IdentityUser, IdentityRole>()
                                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                //Password settings just for easy testing :)
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 2;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

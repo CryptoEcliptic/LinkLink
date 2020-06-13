@@ -3,13 +3,11 @@
 @{
     ViewBag.Title = "User Registration";
 }
-
-
 <div class="row mt-2">
     <br />
     <div class="col-md-4 offset-md-4 text-center">
         <h1>User Registration</h1>
-        <form method="post">
+        <form method="Post" asp-action="Register" asp-controller="Account">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email"></label>
