@@ -49,6 +49,42 @@ namespace LinkLink.App.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLoginBindingModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await this.signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+
+                ModelState.AddModelError("", "Invalid Login attempt!");
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
 
         public async Task<JsonResult> IsExistingEmail(string email)
         {
