@@ -74,5 +74,35 @@ namespace LinkLink.App.Controllers
 
             return View(employee);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            EmployeeDetailsServiceModel employee = await this._employeeServices.GetEmployeeByIdAsync(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            EmployeeEditBindingModel model = new EmployeeEditBindingModel()
+            { 
+               Id = employee.EmployeeId,
+               FirstName = employee.FirstName,
+               LastName = employee.LastName,
+               StartingDate = employee.StartingDate,
+               Salary = employee.Salary,
+               ExperienceLevel = employee.ExperienceLevel,
+               VacationDays = employee.VacationDays,
+               EmployeesOffices = employee.EmployeesOffices
+            };
+
+            return View(model);
+        }
     }
 }
