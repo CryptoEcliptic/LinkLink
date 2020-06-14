@@ -10,7 +10,7 @@ namespace LinkLink.Services.Contracts
     {
         Task<bool> CreateCompanyAsync(CompanyCreateServiceModel company);
 
-        //Task<bool> GetByNameAsync(string name);
+        Task<bool> IsExistingNameAsync(string name);
 
     }
 }

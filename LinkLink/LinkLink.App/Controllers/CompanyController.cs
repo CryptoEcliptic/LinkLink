@@ -47,14 +47,15 @@ namespace LinkLink.App.Controllers
             return View(model);
         }
 
-        //public async Task<JsonResult> IsExistingCompanyName(string name)
-        //{
+        public async Task<JsonResult> IsExistingCompanyName(string name)
+        {
+            bool result = await this._companyServices.IsExistingNameAsync(name);
 
-        //    if (user == null)
-        //    {
-        //        return Json(true);
-        //    }
-        //    return Json($"User with username: {username} already exists!");
-        //}
+            if (!result)
+            {
+                return Json(true);
+            }
+            return Json($"Company withe name: {name} already exists!");
+        }
     }
 }
