@@ -91,15 +91,15 @@ namespace LinkLink.App.Controllers
             }
 
             EmployeeEditBindingModel model = new EmployeeEditBindingModel()
-            { 
-               Id = employee.EmployeeId,
-               FirstName = employee.FirstName,
-               LastName = employee.LastName,
-               StartingDate = employee.StartingDate,
-               Salary = employee.Salary,
-               ExperienceLevel = employee.ExperienceLevel,
-               VacationDays = employee.VacationDays,
-               EmployeesOffices = employee.EmployeesOffices
+            {
+                Id = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                StartingDate = employee.StartingDate,
+                Salary = employee.Salary,
+                ExperienceLevel = employee.ExperienceLevel,
+                VacationDays = employee.VacationDays,
+                EmployeesOffices = employee.EmployeesOffices
             };
 
             return View(model);
@@ -119,7 +119,6 @@ namespace LinkLink.App.Controllers
                     Salary = model.Salary,
                     ExperienceLevel = model.ExperienceLevel,
                     VacationDays = model.VacationDays,
-                    //EmployeesOffices = model.EmployeesOffices
                 };
 
                 bool result = await this._employeeServices.UpdateAsync(employeeEditServiceModel);
@@ -133,6 +132,25 @@ namespace LinkLink.App.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var result = await this._employeeServices.DeleteEmployeeAsync(id);
+
+            if (!result)
+            {
+                return RedirectToAction("Error", "Home");
+                
+            }
+
+            return RedirectToAction("Index", "Employee");
         }
     }
 }

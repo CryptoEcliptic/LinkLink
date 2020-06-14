@@ -16,6 +16,6 @@ namespace LinkLink.Services.Contracts
 
         Task<bool> UpdateAsync(EmployeeEditServiceModel employee);
 
-        bool DeleteEmployee(int id);
+        Task<bool> DeleteEmployeeAsync(string id);
     }
 }

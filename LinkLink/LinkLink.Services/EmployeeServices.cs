@@ -19,7 +19,7 @@ namespace LinkLink.Services
         {
             this._context = context;
         }
-        
+
 
         public async Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel model)
         {
@@ -33,8 +33,8 @@ namespace LinkLink.Services
                 VacationDays = model.VacationDays,
             };
 
-           await Task.Run(() => this._context.Employees.Add(employee));
-           int result = await this._context.SaveChangesAsync();
+            this._context.Employees.Add(employee);
+            int result = await this._context.SaveChangesAsync();
 
             if (result > 0)
             {
@@ -44,9 +44,24 @@ namespace LinkLink.Services
             return false;
         }
 
-        public bool DeleteEmployee(int id)
+        public async Task<bool> DeleteEmployeeAsync(string id)
         {
-            throw new NotImplementedException();
+            Employee employee = this._context.Employees.FirstOrDefault(e => e.EmployeeId == id);
+
+            if (employee == null)
+            {
+                return false;
+            }
+
+            this._context.Employees.Remove(employee);
+            int result = await this._context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<IEnumerable<EmployeeIndexServiceModel>> GetAllEmployeesAsync()
@@ -71,7 +86,7 @@ namespace LinkLink.Services
         }
 
         public async Task<EmployeeDetailsServiceModel> GetEmployeeByIdAsync(string id)
-        {   
+        {
             Employee employee = await Task.Run(() => this._context.Employees
                                                      .FirstOrDefault(x => x.EmployeeId == id));
 
@@ -92,12 +107,12 @@ namespace LinkLink.Services
             })
             .ToList();
 
-            EmployeeDetailsServiceModel serviceModel = new EmployeeDetailsServiceModel() 
+            EmployeeDetailsServiceModel serviceModel = new EmployeeDetailsServiceModel()
             {
                 EmployeeId = employee.EmployeeId,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                Salary =employee.Salary,
+                Salary = employee.Salary,
                 StartingDate = employee.StartingDate,
                 ExperienceLevel = employee.ExperienceLevel,
                 VacationDays = employee.VacationDays,
@@ -125,7 +140,7 @@ namespace LinkLink.Services
 
             var employeeToUpdate = _context.Employees.Attach(dbEmployee);
             employeeToUpdate.State = EntityState.Modified;
-            int result = _context.SaveChanges();
+            int result = await _context.SaveChangesAsync();
 
             if (result > 0)
             {
