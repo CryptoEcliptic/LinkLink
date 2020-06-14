@@ -3,6 +3,7 @@ using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LinkLink.App.Controllers
@@ -19,7 +20,8 @@ namespace LinkLink.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await this._employeeServices.GetAllEmployeesAsync();
+            IEnumerable<EmployeeIndexServiceModel> model = await this._employeeServices.GetAllEmployeesAsync();
+
             return View(model);
         }
 

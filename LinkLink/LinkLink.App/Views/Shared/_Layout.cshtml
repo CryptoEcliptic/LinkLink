@@ -30,9 +30,21 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link nav-btn-strong">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link nav-btn-strong">Manage</a>
-                        </li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle nav-btn-strong" href="#" id="navbarDropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Employee"
+                                       asp-action="Index">Employees</a>
+                                    <a class="dropdown-item" asp-controller="Company"
+                                       asp-action="Index">Companies</a>
+                                </div>
+                            </li>
+                        }
 
                     </ul>
                     <ul class="navbar-nav ml-auto">
