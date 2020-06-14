@@ -35,7 +35,7 @@ namespace LinkLink.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var serviceModel = new CreateEmployeeServiceModel()
+                var serviceModel = new EmployeeCreateServiceModel()
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,

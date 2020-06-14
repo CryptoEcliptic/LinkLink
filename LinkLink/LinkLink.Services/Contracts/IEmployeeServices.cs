@@ -12,7 +12,7 @@ namespace LinkLink.Services.Contracts
 
         Task<IEnumerable<EmployeeIndexServiceModel>> GetAllEmployeesAsync();
 
-        Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel employee);
+        Task<bool> CreateEmployeeAsync(EmployeeCreateServiceModel employee);
 
         Task<bool> UpdateAsync(EmployeeEditServiceModel employee);
 

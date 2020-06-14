@@ -15,13 +15,13 @@ namespace LinkLink.Services
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeeServices(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        public EmployeeServices(ApplicationDbContext context)
         {
             this._context = context;
         }
 
 
-        public async Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel model)
+        public async Task<bool> CreateEmployeeAsync(EmployeeCreateServiceModel model)
         {
             Employee employee = new Employee
             {

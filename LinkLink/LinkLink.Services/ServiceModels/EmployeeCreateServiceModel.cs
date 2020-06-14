@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LinkLink.Services.ServiceModels
 {
-    public class CreateEmployeeServiceModel
+    public class EmployeeCreateServiceModel
     {
         public string FirstName { get; set; }
 
