@@ -14,7 +14,7 @@ namespace LinkLink.Services.Contracts
 
         Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel employee);
 
-        UpdateEmployeeServiceModel Update(UpdateEmployeeServiceModel employee);
+        Task<bool> UpdateAsync(EmployeeEditServiceModel employee);
 
         bool DeleteEmployee(int id);
     }

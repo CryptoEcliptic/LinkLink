@@ -104,5 +104,35 @@ namespace LinkLink.App.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EmployeeEditBindingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                EmployeeEditServiceModel employeeEditServiceModel = new EmployeeEditServiceModel()
+                {
+                    Id = model.Id,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    StartingDate = model.StartingDate,
+                    Salary = model.Salary,
+                    ExperienceLevel = model.ExperienceLevel,
+                    VacationDays = model.VacationDays,
+                    //EmployeesOffices = model.EmployeesOffices
+                };
+
+                bool result = await this._employeeServices.UpdateAsync(employeeEditServiceModel);
+
+                if (!result)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+
+                return RedirectToAction("Details", new { id = model.Id });
+            }
+
+            return View(model);
+        }
     }
 }

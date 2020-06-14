@@ -34,7 +34,7 @@ namespace LinkLink.Services
             };
 
            await Task.Run(() => this._context.Employees.Add(employee));
-           var result = await this._context.SaveChangesAsync();
+           int result = await this._context.SaveChangesAsync();
 
             if (result > 0)
             {
@@ -107,9 +107,32 @@ namespace LinkLink.Services
             return serviceModel;
         }
 
-        public UpdateEmployeeServiceModel Update(UpdateEmployeeServiceModel employee)
+        public async Task<bool> UpdateAsync(EmployeeEditServiceModel employee)
         {
-            throw new NotImplementedException();
+            Employee dbEmployee = await this._context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == employee.Id);
+
+            if (dbEmployee == null)
+            {
+                return false;
+            }
+
+            dbEmployee.ExperienceLevel = employee.ExperienceLevel;
+            dbEmployee.FirstName = employee.FirstName;
+            dbEmployee.LastName = employee.LastName;
+            dbEmployee.Salary = employee.Salary;
+            dbEmployee.VacationDays = employee.VacationDays;
+            dbEmployee.StartingDate = employee.StartingDate;
+
+            var employeeToUpdate = _context.Employees.Attach(dbEmployee);
+            employeeToUpdate.State = EntityState.Modified;
+            int result = _context.SaveChanges();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
