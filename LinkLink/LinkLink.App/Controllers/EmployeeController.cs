@@ -1,13 +1,13 @@
 ﻿using LinkLink.App.ViewModels.EmployeeViewModels;
 using LinkLink.Services.Contracts;
+using LinkLink.Services.ServiceModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LinkLink.App.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeServices _employeeServices;
@@ -17,20 +17,38 @@ namespace LinkLink.App.Controllers
             this._employeeServices = employeeServices;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var model = await this._employeeServices.GetAllEmployeesAsync();
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            //TODO Return available offices
+            EmoloyeeCreateBindingModel model = new EmoloyeeCreateBindingModel();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create(EmoloyeeCreateBindingModel model)
+        public async Task<IActionResult> Create(EmoloyeeCreateBindingModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    this._employeeServices.CreateEmployee();
-            //    return RedirectToAction("Details", new { id = newEmployee.Id });
-            //}
+            if (ModelState.IsValid)
+            {
+                var serviceModel = new CreateEmployeeServiceModel()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Salary = model.Salary,
+                    StartingDate = model.StartingDate,
+                    VacationDays = model.VacationDays,
+                    ExperienceLevel = model.ExperienceLevel
+                };
+
+                await this._employeeServices.CreateEmployeeAsync(serviceModel);
+                return RedirectToAction("Index", "Employee");
+            }
 
             return View(model);
         }

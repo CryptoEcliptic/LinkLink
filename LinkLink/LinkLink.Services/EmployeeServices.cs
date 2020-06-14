@@ -1,26 +1,26 @@
-﻿using LinkLink.Data.EntityModels;
-using LinkLink.Data.Repositories.Contracts;
+﻿using LinkLink.Data;
+using LinkLink.Data.EntityModels;
 using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LinkLink.Services
 {
-    public class EmployeeServices : IEmployeeServices
+    public class EmployeeRepository : IEmployeeServices
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ApplicationDbContext _context;
 
-        public EmployeeServices(IEmployeeRepository employeeRepository, IHostingEnvironment hostingEnvironment)
+        public EmployeeRepository(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
-            this._employeeRepository = employeeRepository;
-            this._hostingEnvironment = hostingEnvironment;
+            this._context = context;
         }
 
 
-        public bool CreateEmployee(CreateEmployeeServiceModel model)
+        public async Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel model)
         {
             Employee employee = new Employee
             {
@@ -33,9 +33,10 @@ namespace LinkLink.Services
                 EmployeesOffices = model.EmployeesOffices
             };
 
-            Employee employeeCreated = this._employeeRepository.Add(employee);
+           await Task.Run(() => this._context.Employees.Add(employee));
+           var result = await this._context.SaveChangesAsync();
 
-            if (employeeCreated != null)
+            if (result > 0)
             {
                 return true;
             }
@@ -48,9 +49,25 @@ namespace LinkLink.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<EmployeeIndexServiceModel> GetAllEmployees()
+        public async Task<IEnumerable<EmployeeIndexServiceModel>> GetAllEmployeesAsync()
         {
-            throw new NotImplementedException();
+            List<Employee> employeesFromDb = await Task.Run(() => this._context.Employees.ToList());
+            List<EmployeeIndexServiceModel> employees = new List<EmployeeIndexServiceModel>();
+
+            foreach (var em in employeesFromDb)
+            {
+                EmployeeIndexServiceModel employee = new EmployeeIndexServiceModel()
+                {
+                    EmployeeId = em.EmployeeId,
+                    FirstName = em.FirstName,
+                    LastName = em.LastName,
+                    ExperienceLevel = em.ExperienceLevel
+                };
+
+                employees.Add(employee);
+            }
+
+            return employees;
         }
 
         public EmployeeDetailsServiceModel GetEmployeeById(int Id)

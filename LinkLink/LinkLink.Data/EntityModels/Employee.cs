@@ -10,6 +10,7 @@ namespace LinkLink.Data.EntityModels
         public Employee()
         {
             this.EmployeesOffices = new List<EmployeeOffice>();
+            this.EmployeeId = Guid.NewGuid().ToString();
         }
 
         [Key]

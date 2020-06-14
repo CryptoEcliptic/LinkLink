@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LinkLink.Services.Contracts
 {
@@ -9,9 +10,9 @@ namespace LinkLink.Services.Contracts
     {
         EmployeeDetailsServiceModel GetEmployeeById(int Id);
 
-        IEnumerable<EmployeeIndexServiceModel> GetAllEmployees();
+        Task<IEnumerable<EmployeeIndexServiceModel>> GetAllEmployeesAsync();
 
-        bool CreateEmployee(CreateEmployeeServiceModel employee);
+        Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel employee);
 
         UpdateEmployeeServiceModel Update(UpdateEmployeeServiceModel employee);
 

@@ -1,4 +1,6 @@
 using LinkLink.Data;
+using LinkLink.Services;
+using LinkLink.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -41,6 +43,8 @@ namespace LinkedBit
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 2;
             });
+
+            services.AddTransient<IEmployeeServices, EmployeeRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,6 +55,7 @@ namespace LinkedBit
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseStaticFiles();
 
             app.UseRouting();
