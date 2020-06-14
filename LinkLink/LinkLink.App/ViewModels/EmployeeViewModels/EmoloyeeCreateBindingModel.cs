@@ -14,10 +14,6 @@ namespace LinkLink.App.ViewModels.EmployeeViewModels
         private const string minLengthErrorMessage = "The {0} should be at least {1} characters!";
         private const string rangeErrorMessage = "The {0} should be in the range between {1} and {2}!";
 
-        public EmoloyeeCreateBindingModel()
-        {
-            this.EmployeesOffices = new List<string>();
-        }
 
         [Required]
         [MinLength(3, ErrorMessage = minLengthErrorMessage)]
@@ -43,6 +39,5 @@ namespace LinkLink.App.ViewModels.EmployeeViewModels
         [Required]
         public ExperienceLevel ExperienceLevel { get; set; }
 
-        public ICollection<string> EmployeesOffices { get; set; }
     }
 }

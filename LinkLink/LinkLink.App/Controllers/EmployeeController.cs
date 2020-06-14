@@ -21,16 +21,13 @@ namespace LinkLink.App.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<EmployeeIndexServiceModel> model = await this._employeeServices.GetAllEmployeesAsync();
-
             return View(model);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            //TODO Return available offices
-            EmoloyeeCreateBindingModel model = new EmoloyeeCreateBindingModel();
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -48,11 +45,34 @@ namespace LinkLink.App.Controllers
                     ExperienceLevel = model.ExperienceLevel
                 };
 
-                await this._employeeServices.CreateEmployeeAsync(serviceModel);
+                bool result = await this._employeeServices.CreateEmployeeAsync(serviceModel);
+                if (!result)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+
                 return RedirectToAction("Index", "Employee");
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            EmployeeDetailsServiceModel employee = await this._employeeServices.GetEmployeeByIdAsync(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
         }
     }
 }

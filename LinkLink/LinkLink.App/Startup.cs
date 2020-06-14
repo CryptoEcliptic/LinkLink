@@ -44,7 +44,7 @@ namespace LinkedBit
                 options.Password.RequiredUniqueChars = 2;
             });
 
-            services.AddTransient<IEmployeeServices, EmployeeRepository>();
+            services.AddTransient<IEmployeeServices, EmployeeServices>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

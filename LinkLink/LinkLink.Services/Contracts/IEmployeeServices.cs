@@ -8,7 +8,7 @@ namespace LinkLink.Services.Contracts
 {
     public interface IEmployeeServices
     {
-        EmployeeDetailsServiceModel GetEmployeeById(int Id);
+        Task<EmployeeDetailsServiceModel> GetEmployeeByIdAsync(string Id);
 
         Task<IEnumerable<EmployeeIndexServiceModel>> GetAllEmployeesAsync();
 

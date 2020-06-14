@@ -1,0 +1,60 @@
+﻿
+@model EmployeeDetailsServiceModel
+
+@{
+    ViewBag.Title = "Employee Details";
+}
+
+    <div class="col-md-4 offset-md-4 text-center">
+        <h1>Employee Details</h1>
+        <a asp-action="Index" asp-controller="Employee"
+           class="btn btn-primary mb-3 w-25">
+            Back
+        </a>
+        <div class="card mb-3">
+            <div class="card-header">
+                EmployeeId Id : @Model.EmployeeId
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">First Name: @Model.FirstName</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Last Name: @Model.LastName</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Seniority Level: @Model.ExperienceLevel</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Starting Date: @Model.StartingDate</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Salary: @Model.Salary</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Vacation Days: @Model.VacationDays</h5>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>User officess</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.EmployeesOffices.Any())
+                    {
+                        foreach (var office in Model.EmployeesOffices)
+                        {
+                            <h5 class="card-title">@office.City</h5>
+                            <h5 class="card-title">@office.Street</h5>
+                            <h5 class="card-title">@office.StreetNumber</h5>
+                        }
+                    }
+                    else
+                    {
+                        <h5 class="card-title">No officess assigned to that employee</h5>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

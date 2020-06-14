@@ -3,6 +3,7 @@ using LinkLink.Data.EntityModels;
 using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace LinkLink.Services
 {
-    public class EmployeeRepository : IEmployeeServices
+    public class EmployeeServices : IEmployeeServices
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeeRepository(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        public EmployeeServices(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             this._context = context;
         }
-
+        
 
         public async Task<bool> CreateEmployeeAsync(CreateEmployeeServiceModel model)
         {
@@ -30,7 +31,6 @@ namespace LinkLink.Services
                 Salary = model.Salary,
                 StartingDate = model.StartingDate,
                 VacationDays = model.VacationDays,
-                EmployeesOffices = model.EmployeesOffices
             };
 
            await Task.Run(() => this._context.Employees.Add(employee));
@@ -70,9 +70,41 @@ namespace LinkLink.Services
             return employees;
         }
 
-        public EmployeeDetailsServiceModel GetEmployeeById(int Id)
-        {
-            throw new NotImplementedException();
+        public async Task<EmployeeDetailsServiceModel> GetEmployeeByIdAsync(string id)
+        {   
+            Employee employee = await Task.Run(() => this._context.Employees
+                                                     .FirstOrDefault(x => x.EmployeeId == id));
+
+            IEnumerable<string> officesKeys = employee.EmployeesOffices.Select(x => x.OfficeId);
+
+            List<Office> offices = this._context.Offices
+                                                 .Where(x => officesKeys.Contains(x.OfficeId))
+                                                 .ToList(); //TODO Check how that query works
+
+            List<OfficeDetailsServiceModel> officeDetailServiceModelCollection = offices.Select(o => new OfficeDetailsServiceModel
+            {
+                City = o.City,
+                Country = o.Country,
+                OfficeId = o.OfficeId,
+                Street = o.Street,
+                StreetNumber = o.StreetNumber,
+                IsHQ = o.IsHQ
+            })
+            .ToList();
+
+            EmployeeDetailsServiceModel serviceModel = new EmployeeDetailsServiceModel() 
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Salary =employee.Salary,
+                StartingDate = employee.StartingDate,
+                ExperienceLevel = employee.ExperienceLevel,
+                VacationDays = employee.VacationDays,
+                EmployeesOffices = officeDetailServiceModelCollection
+            };
+
+            return serviceModel;
         }
 
         public UpdateEmployeeServiceModel Update(UpdateEmployeeServiceModel employee)

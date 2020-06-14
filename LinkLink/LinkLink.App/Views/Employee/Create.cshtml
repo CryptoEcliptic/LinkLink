@@ -44,24 +44,6 @@
             <button type="submit" class="btn-lg btn-primary">Create Employee</button>
             <br />
         </form>
-        <div class="card">
-            <div class="card-header">
-                <h3>Employee Offices</h3>
-            </div>
-            <div class="card-body">
-                @if (Model.EmployeesOffices.Any())
-                {
-                    foreach (var office in Model.EmployeesOffices)
-                    {
-                        <h5 class="card-title">@office</h5>
-                    }
-                }
-                else
-                {
-                    <h5 class="card-title">None at the moment</h5>
-                }
-            </div>
-        </div>
     </div>
 </div>
 

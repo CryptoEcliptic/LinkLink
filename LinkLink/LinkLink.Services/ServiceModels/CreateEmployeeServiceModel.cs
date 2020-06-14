@@ -20,6 +20,5 @@ namespace LinkLink.Services.ServiceModels
 
         public ExperienceLevel ExperienceLevel { get; set; }
 
-        public ICollection<EmployeeOffice> EmployeesOffices { get; set; }
     }
 }
