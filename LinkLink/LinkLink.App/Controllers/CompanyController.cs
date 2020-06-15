@@ -82,7 +82,7 @@ namespace LinkLink.App.Controllers
                 return NotFound();
             }
 
-            List<OfficeDetailsViewModel> officess = company.Offices
+            List<OfficeDetailsViewModel> offices = company.Offices
                 .Select(x => new OfficeDetailsViewModel
                 {
                     City = x.City,
@@ -99,7 +99,41 @@ namespace LinkLink.App.Controllers
                 CompanyId = company.CompanyId,
                 Name = company.Name,
                 CreationDate = company.CreationDate,
-                Offices = officess
+                Offices = offices
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            CompanyDetailsServiceModel company = await this._companyServices.GetByIdAsync(id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            List<OfficeDetailsViewModel> offices = company.Offices
+                .Select(x => new OfficeDetailsViewModel
+                {
+                    City = x.City,
+                    OfficeId = x.OfficeId,
+                    Country = x.Country,
+                    IsHQ = x.IsHQ,
+                    Street = x.Street,
+                    StreetNumber = x.StreetNumber
+                })
+                .ToList();
+
+            CompanyEditBindingModel model = new CompanyEditBindingModel()
+            {
+                CompanyId = company.CompanyId,
+                Name = company.Name,
+                CreationDate = company.CreationDate,
+                EmployeesOffices = offices,
             };
 
             return View(model);
