@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LinkLink.Data.EntityModels
@@ -8,6 +9,7 @@ namespace LinkLink.Data.EntityModels
         public Office()
         {
             this.EmployeesOffices = new List<EmployeeOffice>();
+            this.OfficeId = Guid.NewGuid().ToString();
         }
 
         [Key]
