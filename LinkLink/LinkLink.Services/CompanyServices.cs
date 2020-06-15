@@ -123,5 +123,25 @@ namespace LinkLink.Services
 
             return false;
         }
+
+        public async Task<bool> DeleteCompanyAsync(int id)
+        {
+            Company company = this._context.Companies.FirstOrDefault(e => e.CompanyId == id);
+
+            if (company == null)
+            {
+                return false;
+            }
+
+            this._context.Companies.Remove(company);
+            int result = await this._context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

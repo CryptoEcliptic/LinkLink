@@ -18,5 +18,7 @@ namespace LinkLink.Services.Contracts
 
         Task<bool> UpdateAsync(CompanyEditServiceModel model);
 
+        Task<bool> DeleteCompanyAsync(int id);
+
     }
 }

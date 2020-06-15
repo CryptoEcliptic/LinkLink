@@ -164,6 +164,20 @@ namespace LinkLink.App.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            var result = await this._companyServices.DeleteCompanyAsync(id);
+
+            if (!result)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            return RedirectToAction("Index", "Company");
+        }
+
         public async Task<JsonResult> IsExistingCompanyName(string name)
         {
             bool result = await this._companyServices.IsExistingNameAsync(name);
