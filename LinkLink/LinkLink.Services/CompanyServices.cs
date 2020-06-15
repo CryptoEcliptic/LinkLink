@@ -65,22 +65,17 @@ namespace LinkLink.Services
                 .Include(o => o.Offices)
                 .FirstOrDefaultAsync(c => c.CompanyId == id);
 
-            ICollection<OfficeDetailsServiceModel> offices = new List<OfficeDetailsServiceModel>();
-
-            foreach (var off in company.Offices)
-            {
-                OfficeDetailsServiceModel office = new OfficeDetailsServiceModel()
-                {
-                    OfficeId = off.OfficeId,
-                    City = off.City,
-                    Country = off.Country,
-                    Street = off.Street,
-                    StreetNumber = off.StreetNumber,
-                    IsHQ = off.IsHQ
-                };
-
-                offices.Add(office);
-            }
+            List<OfficeDetailsServiceModel> offices = company.Offices
+               .Select(x => new OfficeDetailsServiceModel
+               {
+                   City = x.City,
+                   OfficeId = x.OfficeId,
+                   Country = x.Country,
+                   IsHQ = x.IsHQ,
+                   Street = x.Street,
+                   StreetNumber = x.StreetNumber
+               })
+               .ToList();
 
             CompanyDetailsServiceModel model = new CompanyDetailsServiceModel()
             {

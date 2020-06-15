@@ -1,0 +1,48 @@
+﻿@model CompanyDetailsViewModel
+
+@{
+    ViewBag.Title = "Company Details";
+}
+
+<div class="col-md-4 offset-md-4 text-center">
+    <h1>Company Details</h1>
+    <a asp-action="Index" asp-controller="Company"
+       class="btn btn-primary mb-3 w-25">
+        Back
+    </a>
+    <div class="card mb-3">
+        <div class="card-header">
+            Company Id : @Model.CompanyId
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Name</h5>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Creation Date: @Model.CreationDate</h5>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Company officess</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Offices.Any())
+                {
+                    foreach (var office in Model.Offices)
+                    {
+                        <h5 class="card-title">@office.OfficeId</h5>
+                        <h5 class="card-title">@office.City</h5>
+                        <h5 class="card-title">@office.Street</h5>
+                        <h5 class="card-title">@office.StreetNumber</h5>
+                    }
+                }
+                else
+                {
+                    <h5 class="card-title">No officess assigned to that company</h5>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

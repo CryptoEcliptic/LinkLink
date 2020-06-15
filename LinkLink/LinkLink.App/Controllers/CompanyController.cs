@@ -1,4 +1,5 @@
 ﻿using LinkLink.App.ViewModels.CompanyViewModels;
+using LinkLink.App.ViewModels.OfficeViewModels;
 using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
 using Microsoft.AspNetCore.Authorization;
@@ -76,7 +77,32 @@ namespace LinkLink.App.Controllers
         {
             CompanyDetailsServiceModel company = await this._companyServices.GetByIdAsync(id);
 
-            return View();
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            List<OfficeDetailsViewModel> officess = company.Offices
+                .Select(x => new OfficeDetailsViewModel
+                {
+                    City = x.City,
+                    OfficeId = x.OfficeId,
+                    Country = x.Country,
+                    IsHQ = x.IsHQ,
+                    Street = x.Street,
+                    StreetNumber = x.StreetNumber
+                })
+                .ToList();
+
+            CompanyDetailsViewModel model = new CompanyDetailsViewModel()
+            {
+                CompanyId = company.CompanyId,
+                Name = company.Name,
+                CreationDate = company.CreationDate,
+                Offices = officess
+            };
+
+            return View(model);
         }
 
         public async Task<JsonResult> IsExistingCompanyName(string name)
