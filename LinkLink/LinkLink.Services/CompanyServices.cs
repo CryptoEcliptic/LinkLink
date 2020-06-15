@@ -38,6 +38,26 @@ namespace LinkLink.Services
             return false;
         }
 
+        public async Task <IEnumerable<CompanyIndexServiceModel>> GetAllCompaniesAsync()
+        {
+            IQueryable<Company> companies = await Task.Run(() => this._context.Companies);
+
+            List<CompanyIndexServiceModel> model = new List<CompanyIndexServiceModel>();
+
+            foreach (var cp in companies)
+            {
+                CompanyIndexServiceModel company = new CompanyIndexServiceModel()
+                {
+                    CompanyId = cp.CompanyId,
+                    Name = cp.Name,
+                    CreationDate = cp.CreationDate,
+                };
+                model.Add(company);
+            }
+
+            return model;
+        }
+
         public async Task<bool> IsExistingNameAsync(string name)
         {
             Company company = await Task.Run(() => this._context.Companies.FirstOrDefault(c => c.Name == name));

@@ -1,6 +1,7 @@
 ﻿using LinkLink.App.ViewModels.CompanyViewModels;
 using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkLink.App.Controllers
 {
+    [Authorize]
     public class CompanyController : Controller
     {
         private readonly ICompanyServices _companyServices;
@@ -16,6 +18,28 @@ namespace LinkLink.App.Controllers
         public CompanyController(ICompanyServices companyServices)
         {
             this._companyServices = companyServices;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<CompanyIndexServiceModel> companies = await this._companyServices.GetAllCompaniesAsync();
+
+            List<CompanyIndexViewModel> model = new List<CompanyIndexViewModel>();
+
+            foreach (var cp in companies)
+            {
+                CompanyIndexViewModel company = new CompanyIndexViewModel()
+                {
+                    CompanyId = cp.CompanyId,
+                    Name = cp.Name,
+                    CreationDate = cp.CreationDate,
+                };
+
+                model.Add(company);
+            }
+
+            return View(model);
         }
 
         [HttpGet]

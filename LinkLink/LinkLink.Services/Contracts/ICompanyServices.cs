@@ -12,5 +12,7 @@ namespace LinkLink.Services.Contracts
 
         Task<bool> IsExistingNameAsync(string name);
 
+        Task<IEnumerable<CompanyIndexServiceModel>> GetAllCompaniesAsync();
+
     }
 }

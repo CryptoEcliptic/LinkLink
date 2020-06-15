@@ -55,11 +55,13 @@ namespace LinkedBit
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStaticFiles();
-
-            app.UseRouting();
+            
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

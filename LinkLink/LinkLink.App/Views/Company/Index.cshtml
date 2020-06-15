@@ -1,0 +1,76 @@
+﻿
+@model List<CompanyIndexViewModel>
+
+@{
+    ViewBag.Title = "All Companies";
+}
+
+<div class="col-md-4 offset-md-4 text-center">
+    <h1>All Companies</h1>
+
+    @if (Model.Any())
+    {
+        <a asp-action="Create" asp-controller="Company"
+           class="btn btn-primary mb-3" style="width:auto">
+            Add new company
+        </a>
+
+        foreach (var company in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    Company Id : @company.CompanyId
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Company Name: @company.Name</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Company Creation Date: @company.CreationDate</h5>
+                </div>
+                <div class="card-footer">
+                    <form method="post" asp-action="Delete" asp-controller="Company" asp-route-id="@company.CompanyId">
+                        <a asp-controller="Company" asp-action="Edit"
+                           asp-route-id="@company.CompanyId" class="btn btn-primary" style="width:73.8px">Edit</a>
+                        <a asp-controller="Company" asp-action="Details"
+                           asp-route-id="@company.CompanyId" class="btn btn-primary">Details</a>
+
+                        <span id="confirmDeleteSpan_@company.CompanyId" style="display:none">
+                            <span>Are you sure you want to delete?</span>
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                            <a href="#" class="btn btn-primary"
+                               onclick="confirmDelete('@company.CompanyId', false)">No</a>
+                        </span>
+                        <span id="deleteSpan_@company.CompanyId">
+                            <a href="#" class="btn btn-danger"
+                               onclick="confirmDelete('@company.CompanyId', true)">Delete</a>
+                        </span>
+                    </form>
+                </div>
+                <br />
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No companies created yet
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create a company
+                </h5>
+                <a class="btn btn-primary" style="width:auto"
+                   asp-controller="Company" asp-action="Create">
+                    Add new company
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}
+
