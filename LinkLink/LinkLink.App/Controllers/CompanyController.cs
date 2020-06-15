@@ -139,11 +139,36 @@ namespace LinkLink.App.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(CompanyEditBindingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                CompanyEditServiceModel serviceModel = new CompanyEditServiceModel()
+                {
+                    CompanyId = model.CompanyId,
+                    CreationDate = model.CreationDate,
+                    Name = model.Name
+                };
+
+                bool result = await this._companyServices.UpdateAsync(serviceModel);
+
+                if (!result)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+
+                return RedirectToAction("Details", new { id = model.CompanyId });
+            }
+
+            return View(model);
+        }
+
         public async Task<JsonResult> IsExistingCompanyName(string name)
         {
             bool result = await this._companyServices.IsExistingNameAsync(name);
 
-            if (!result)
+            if (!result )
             {
                 return Json(true);
             }

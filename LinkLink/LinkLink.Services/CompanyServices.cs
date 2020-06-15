@@ -88,6 +88,30 @@ namespace LinkLink.Services
             return model;
         }
 
+        public async Task<bool> UpdateAsync(CompanyEditServiceModel model)
+        {
+            Company dbECompany = await this._context.Companies.FirstOrDefaultAsync(e => e.CompanyId == model.CompanyId);
+
+            if (dbECompany == null)
+            {
+                return false;
+            }
+
+            dbECompany.Name = model.Name;
+            dbECompany.CreationDate = model.CreationDate;
+
+            var companyToUpdate = _context.Companies.Attach(dbECompany);
+            companyToUpdate.State = EntityState.Modified;
+            int result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<bool> IsExistingNameAsync(string name)
         {
             Company company = await Task.Run(() => this._context.Companies.FirstOrDefault(c => c.Name == name));

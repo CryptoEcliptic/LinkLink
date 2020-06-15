@@ -16,5 +16,7 @@ namespace LinkLink.Services.Contracts
 
         Task<CompanyDetailsServiceModel> GetByIdAsync(int id);
 
+        Task<bool> UpdateAsync(CompanyEditServiceModel model);
+
     }
 }
