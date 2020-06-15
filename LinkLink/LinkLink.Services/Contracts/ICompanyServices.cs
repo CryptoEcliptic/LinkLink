@@ -14,5 +14,7 @@ namespace LinkLink.Services.Contracts
 
         Task<IEnumerable<CompanyIndexServiceModel>> GetAllCompaniesAsync();
 
+        Task<CompanyDetailsServiceModel> GetByIdAsync(int id);
+
     }
 }

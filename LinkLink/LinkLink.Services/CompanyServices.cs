@@ -2,6 +2,7 @@
 using LinkLink.Data.EntityModels;
 using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace LinkLink.Services
             return false;
         }
 
-        public async Task <IEnumerable<CompanyIndexServiceModel>> GetAllCompaniesAsync()
+        public async Task<IEnumerable<CompanyIndexServiceModel>> GetAllCompaniesAsync()
         {
             IQueryable<Company> companies = await Task.Run(() => this._context.Companies);
 
@@ -54,6 +55,40 @@ namespace LinkLink.Services
                 };
                 model.Add(company);
             }
+
+            return model;
+        }
+
+        public async Task<CompanyDetailsServiceModel> GetByIdAsync(int id)
+        {
+            Company company = await this._context.Companies
+                .Include(o => o.Offices)
+                .FirstOrDefaultAsync(c => c.CompanyId == id);
+
+            ICollection<OfficeDetailsServiceModel> offices = new List<OfficeDetailsServiceModel>();
+
+            foreach (var off in company.Offices)
+            {
+                OfficeDetailsServiceModel office = new OfficeDetailsServiceModel()
+                {
+                    OfficeId = off.OfficeId,
+                    City = off.City,
+                    Country = off.Country,
+                    Street = off.Street,
+                    StreetNumber = off.StreetNumber,
+                    IsHQ = off.IsHQ
+                };
+
+                offices.Add(office);
+            }
+
+            CompanyDetailsServiceModel model = new CompanyDetailsServiceModel()
+            {
+                CompanyId = company.CompanyId,
+                Name = company.Name,
+                CreationDate = company.CreationDate,
+                Offices = offices,
+            };
 
             return model;
         }

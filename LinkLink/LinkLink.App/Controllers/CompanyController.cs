@@ -71,6 +71,14 @@ namespace LinkLink.App.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            CompanyDetailsServiceModel company = await this._companyServices.GetByIdAsync(id);
+
+            return View();
+        }
+
         public async Task<JsonResult> IsExistingCompanyName(string name)
         {
             bool result = await this._companyServices.IsExistingNameAsync(name);
