@@ -88,7 +88,7 @@ namespace LinkLink.App.Controllers
                     City = x.City,
                     OfficeId = x.OfficeId,
                     Country = x.Country,
-                    IsHQ = x.IsHQ,
+                    IsHQ = x.IsHQ == true? "The office is Headquarter" : "",
                     Street = x.Street,
                     StreetNumber = x.StreetNumber
                 })
@@ -122,7 +122,7 @@ namespace LinkLink.App.Controllers
                     City = x.City,
                     OfficeId = x.OfficeId,
                     Country = x.Country,
-                    IsHQ = x.IsHQ,
+                    IsHQ = x.IsHQ == true ? "The office is Headquarter" : "",
                     Street = x.Street,
                     StreetNumber = x.StreetNumber
                 })

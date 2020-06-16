@@ -46,6 +46,7 @@ namespace LinkedBit
 
             services.AddTransient<IEmployeeServices, EmployeeServices>();
             services.AddTransient<ICompanyServices, CompanyServices>();
+            services.AddTransient<IOfficeServices, OfficeServices>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

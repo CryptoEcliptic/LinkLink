@@ -25,8 +25,9 @@ namespace LinkLink.Services
                 City = model.City,
                 Country = model.Country,
                 Street = model.Street,
-                StreetNumber = model.Street,
+                StreetNumber = model.StreetNumber,
                 IsHQ = model.IsHQ,
+                CompanyId = model.CompanyId
             };
 
             this._context.Offices.Add(office);

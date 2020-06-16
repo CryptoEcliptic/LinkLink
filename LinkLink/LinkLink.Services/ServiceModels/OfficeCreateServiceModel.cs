@@ -6,6 +6,8 @@ namespace LinkLink.Services.ServiceModels
 {
     public class OfficeCreateServiceModel
     {
+        public int CompanyId { get; set; }
+
         public string Country { get; set; }
 
         public string City { get; set; }

@@ -17,6 +17,6 @@ namespace LinkLink.App.ViewModels.OfficeViewModels
 
         public string StreetNumber { get; set; }
 
-        public bool IsHQ { get; set; }
+        public string IsHQ { get; set; }
     }
 }

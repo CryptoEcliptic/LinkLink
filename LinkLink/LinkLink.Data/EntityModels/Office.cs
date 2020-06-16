@@ -25,6 +25,9 @@ namespace LinkLink.Data.EntityModels
 
         public bool IsHQ { get; set; }
 
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
+
         public ICollection<EmployeeOffice> EmployeesOffices { get; set; }
     }
 }

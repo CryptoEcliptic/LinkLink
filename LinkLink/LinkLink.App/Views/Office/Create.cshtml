@@ -1,0 +1,41 @@
+﻿@model OfficeCreateBindingModel
+@{
+    ViewBag.Title = "Create Office";
+    var companyId = ViewBag.CompanyId;
+}
+<div class="row mt-2">
+    <br />
+    <div class="col-md-4 offset-md-4 text-center">
+        <h1>Create Office</h1>
+        <form method="Post" asp-action="Create" asp-controller="Office" asp-route-companyId="@companyId">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Country"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetNumber"></label>
+                <input asp-for="StreetNumber" class="form-control" />
+                <span asp-validation-for="StreetNumber" class="text-danger"></span>
+            </div>
+            <div class="form-check m-1">
+                <input asp-for="IsHQ" class="form-check-input" />
+                <label class="form-check-label" asp-for="IsHQ"></label>
+            </div>
+            <br />
+            <button type="submit" class="btn-lg btn-primary">Create Office</button>
+            <br />
+        </form>
+    </div>
+</div>

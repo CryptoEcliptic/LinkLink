@@ -79,3 +79,10 @@ body, html {
 .nav-btn-strong {
     font-weight: bold;
 }
+
+.office-hr {
+    border: 2px solid;
+}
+.screen-height-min {
+    min-height: 100%;
+}

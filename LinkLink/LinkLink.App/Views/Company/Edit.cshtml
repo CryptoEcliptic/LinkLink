@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Edit Company";
 }
-<div class="row mt-2">
+<div class="row mt-2 screen-height-min">
     <br />
     <div class="col-md-4 offset-md-4 text-center">
         <h1>Edit Company</h1>
@@ -39,11 +39,11 @@
                     {
                         foreach (var office in Model.EmployeesOffices)
                         {
-                            <div class="row">
-                                <h5 class="card-title">@office.City</h5>
-                                <h5 class="card-title">@office.Street</h5>
-                                <h5 class="card-title">@office.StreetNumber</h5>
-                            </div>
+                            <h5 class="card-title">Country: @office.Country</h5>
+                            <h5 class="card-title">City: @office.City</h5>
+                            <h5 class="card-title">Street: @office.Street @office.StreetNumber</h5>
+                            <h5 class="card-title">@office.IsHQ</h5>
+                            <hr class="office-hr" />
                         }
                     }
                     else
@@ -51,15 +51,17 @@
                         <h5 class="card-title">No officess selected for this employee!</h5>
                     }
                 </div>
+                <br />
+                <br />
                 <div class="card-footer">
-                    <a asp-action="Create" asp-controller="Office" asp-route-userId="@Model.CompanyId"
+                    <a asp-action="Create" asp-controller="Office" asp-route-companyId="@Model.CompanyId"
                        class="btn btn-primary">
                         Add office to that company
                     </a>
                 </div>
-
             </div>
         </form>
+        <br />
     </div>
 </div>
 

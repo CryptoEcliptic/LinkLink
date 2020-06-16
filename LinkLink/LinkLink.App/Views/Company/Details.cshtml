@@ -4,7 +4,7 @@
     ViewBag.Title = "Company Details";
 }
 
-<div class="col-md-4 offset-md-4 text-center">
+<div class="col-md-4 offset-md-4 text-center screen-height-min">
     <h1>Company Details</h1>
     <a asp-action="Index" asp-controller="Company"
        class="btn btn-primary mb-3 w-25">
@@ -29,16 +29,19 @@
                 {
                     foreach (var office in Model.Offices)
                     {
-                        <h5 class="card-title">@office.OfficeId</h5>
-                        <h5 class="card-title">@office.City</h5>
-                        <h5 class="card-title">@office.Street</h5>
-                        <h5 class="card-title">@office.StreetNumber</h5>
+                        <h5 class="card-title">Country: @office.Country</h5>
+                        <h5 class="card-title">City: @office.City</h5>
+                        <h5 class="card-title">Street: @office.Street @office.StreetNumber</h5>
+                        <h5 class="card-title">@office.IsHQ</h5>
+                        <hr class="office-hr" />
                     }
                 }
                 else
                 {
                     <h5 class="card-title">No officess assigned to that company</h5>
                 }
+                <br />
+                <br />
             </div>
         </div>
     </div>
