@@ -87,14 +87,16 @@ namespace LinkLink.Services
 
         public async Task<EmployeeDetailsServiceModel> GetEmployeeByIdAsync(string id)
         {
-            Employee employee = await Task.Run(() => this._context.Employees
-                                                     .FirstOrDefault(x => x.EmployeeId == id));
+            Employee employee = await this._context.Employees
+                                        .Include(eo => eo.EmployeesOffices)
+                                        .ThenInclude(o => o.Office)
+                                        .FirstOrDefaultAsync(e => e.EmployeeId == id);
 
-            IEnumerable<string> officesKeys = employee.EmployeesOffices.Select(x => x.OfficeId);
+            IEnumerable<string> officesKeys = employee.EmployeesOffices.Select(x => x.OfficeId).ToList();
 
             List<Office> offices = this._context.Offices
                                                  .Where(x => officesKeys.Contains(x.OfficeId))
-                                                 .ToList(); //TODO Check how that query works
+                                                 .ToList();
 
             List<OfficeDetailsServiceModel> officeDetailServiceModelCollection = offices.Select(o => new OfficeDetailsServiceModel
             {

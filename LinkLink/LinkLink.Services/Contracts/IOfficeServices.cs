@@ -9,5 +9,9 @@ namespace LinkLink.Services.Contracts
         Task<bool> CreateOfficeAsync(OfficeCreateServiceModel model);
 
         Task<ICollection<OfficeIndexServiceModel>> GetAllOfficesAsync();
+
+        Task<ICollection<OfficeEmployeeServiceModel>> ManageEmployeeOffices(string employeeId);
+
+        Task<bool> UpdateOfficeEmployees(string employeeId, ICollection<OfficeEmployeesUpdateServiceModel> model);
     }
 }

@@ -126,7 +126,27 @@ namespace LinkLink.Services
 
         public async Task<bool> DeleteCompanyAsync(int id)
         {
-            Company company = this._context.Companies.FirstOrDefault(e => e.CompanyId == id);
+            Company company = this._context.Companies
+                            .Include(x => x.Offices)
+                            .ThenInclude(z => z.EmployeesOffices)
+                            .FirstOrDefault(e => e.CompanyId == id);
+
+            List<Office> officesToRemove = this._context.Offices.Where(x => x.CompanyId == company.CompanyId).ToList();
+            List<EmployeeOffice> employeeOffices = this._context.EmployeesOffices.ToList();
+
+            foreach (var eo in officesToRemove)
+            {
+                var emplOfficesToRemove = this._context.EmployeesOffices.Where(x => x.OfficeId == eo.OfficeId);
+                if (emplOfficesToRemove != null)
+                {
+                    this._context.EmployeesOffices.RemoveRange(emplOfficesToRemove);
+                   
+                }
+            }
+
+            this._context.RemoveRange(officesToRemove);
+            await this._context.SaveChangesAsync();
+
 
             if (company == null)
             {

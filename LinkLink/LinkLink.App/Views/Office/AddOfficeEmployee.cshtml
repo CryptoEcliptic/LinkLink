@@ -1,0 +1,32 @@
+﻿@model List<OfficeEmployeeViewModel>
+@{
+    var employeeId = this.ViewBag.EmployeeId;
+}
+<div class="col-md-4 offset-md-4 text-center">
+    <form method="Post" asp-controller="Office" asp-action="AddOfficeEmployee" asp-route-employeeId="@employeeId" >
+        <div class="card">
+            <div class="card-header">
+                <h2>Select offices to assign that employee</h2>
+            </div>
+            <div class="card-body">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="form-check text-center">
+                        <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                        <input type=hidden asp-for="@Model[i].Id" />
+                        <label><strong>Country:  </strong>@Model[i].Country</label>
+                        <label><strong>Ctiy:  </strong>@Model[i].City</label>
+                        <label><strong>Street:  </strong>@Model[i].Street</label>
+                    </div>
+                    <hr />
+                }
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Update" class="btn btn-primary"
+                       style="width:auto" />
+                <a asp-action="EditEmployee" asp-controller="Employee" asp-route-employeeId="@employeeId"
+                   class="btn btn-primary" style="width:auto">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

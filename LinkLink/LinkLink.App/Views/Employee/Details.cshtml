@@ -42,9 +42,11 @@
                     {
                         foreach (var office in Model.EmployeesOffices)
                         {
-                            <h5 class="card-title">@office.City</h5>
-                            <h5 class="card-title">@office.Street</h5>
-                            <h5 class="card-title">@office.StreetNumber</h5>
+                            <h5 class="card-title">Country: @office.Country</h5>
+                            <h5 class="card-title">City: @office.City</h5>
+                            <h5 class="card-title">Street: @office.Street</h5>
+                            <h5 class="card-title">Number: @office.StreetNumber</h5>
+                            <hr />
                         }
                     }
                     else
