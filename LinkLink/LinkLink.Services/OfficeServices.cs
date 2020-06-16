@@ -4,6 +4,7 @@ using LinkLink.Services.Contracts;
 using LinkLink.Services.ServiceModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,22 @@ namespace LinkLink.Services
             }
 
             return false;
+        }
+
+        public async Task<ICollection<OfficeIndexServiceModel>> GetAllOfficesAsync()
+        {
+           List<Office> offices = await Task.Run(() => this._context.Offices.ToList());
+
+            List<OfficeIndexServiceModel> serviceModel = offices.Select(o => new OfficeIndexServiceModel
+            {
+                 Id = o.OfficeId,
+                 Country = o.Country,
+                 City = o.City,
+                 Street = o.Street
+            })
+            .ToList();
+
+            return serviceModel;
         }
     }
 }

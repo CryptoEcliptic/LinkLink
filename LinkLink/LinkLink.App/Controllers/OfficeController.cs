@@ -52,5 +52,14 @@ namespace LinkLink.App.Controllers
 
             return View(model);
         }
+
+
+        [HttpGet]
+        public IActionResult AddOfficeEmployee(string employeeId)
+        {
+            //this.ViewBag.CompanyId = companyId;
+
+            return View();
+        }
     }
 }

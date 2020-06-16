@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Create Employee";
 }
-<div class="row mt-2">
+<div class="row mt-2 screen-height-min">
     <br />
     <div class="col-md-4 offset-md-4 text-center">
         <h1>Edit Employee</h1>
@@ -74,14 +74,14 @@
                     }
                 </div>
                 <div class="card-footer">
-                    <a asp-action="ManageOfficess" asp-controller="Office" asp-route-userId="@Model.Id"
+                    <a asp-action="AddOfficeEmployee" asp-controller="Office" asp-route-employeeId="@Model.Id"
                        class="btn btn-primary">
                         Add employee to office
                     </a>
-                </div>
-
+                </div>  
             </div>
         </form>
+        <br />
     </div>
 </div>
 
