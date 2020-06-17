@@ -29,6 +29,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OfficeCreateBindingModel model, int companyId)
         {
             if (ModelState.IsValid)
@@ -66,11 +67,11 @@ namespace LinkLink.App.Controllers
             List<OfficeEmployeeViewModel> model = serviceModel
                         .Select(o => new OfficeEmployeeViewModel
                         {
-                             Id = o.Id,
-                             Country = o.Country,
-                             City = o.City,
-                             Street = o.Street,
-                             IsSelected = o.IsSelected,
+                            Id = o.Id,
+                            Country = o.Country,
+                            City = o.City,
+                            Street = o.Street,
+                            IsSelected = o.IsSelected,
                         })
                         .ToList();
             return View(model);
@@ -79,7 +80,7 @@ namespace LinkLink.App.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOfficeEmployee(List<OfficeEmployeeViewModel> model, string employeeId)
         {
-  
+
             ICollection<OfficeEmployeesUpdateServiceModel> serviceModel = model
                                     .Select(o => new OfficeEmployeesUpdateServiceModel
                                     {

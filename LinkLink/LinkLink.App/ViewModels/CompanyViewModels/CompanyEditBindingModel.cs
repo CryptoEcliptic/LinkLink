@@ -21,7 +21,6 @@ namespace LinkLink.App.ViewModels.CompanyViewModels
         [Required]
         [MinLength(3, ErrorMessage = minLengthErrorMessage)]
         [MaxLength(64, ErrorMessage = maxLengthErrorMessage)]
-        [Remote(action: "IsExistingCompanyName", controller: "Company")]
         public string Name { get; set; }
 
         [Required]

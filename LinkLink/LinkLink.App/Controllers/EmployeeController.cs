@@ -31,6 +31,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EmoloyeeCreateBindingModel model)
         {
             if (ModelState.IsValid)
@@ -66,13 +67,23 @@ namespace LinkLink.App.Controllers
             }
 
             EmployeeDetailsServiceModel employee = await this._employeeServices.GetEmployeeByIdAsync(id);
-
+            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel()
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Salary = employee.Salary,
+                VacationDays = employee.VacationDays,
+                ExperienceLevel = employee.ExperienceLevel,
+                EmployeesOffices = employee.EmployeesOffices,
+                StartingDate = employee.StartingDate.ToString("MM/dd/yyyy")
+            };
             if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(model);
         }
 
         [HttpGet]
@@ -106,6 +117,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EmployeeEditBindingModel model)
         {
             if (ModelState.IsValid)
@@ -135,6 +147,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

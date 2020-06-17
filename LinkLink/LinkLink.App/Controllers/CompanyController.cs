@@ -34,7 +34,7 @@ namespace LinkLink.App.Controllers
                 {
                     CompanyId = cp.CompanyId,
                     Name = cp.Name,
-                    CreationDate = cp.CreationDate,
+                    CreationDate = cp.CreationDate.ToString("MM/dd/yyyy"),
                 };
 
                 model.Add(company);
@@ -50,6 +50,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CompanyCreateBindingModel model)
         {
             if (ModelState.IsValid)
@@ -98,7 +99,7 @@ namespace LinkLink.App.Controllers
             {
                 CompanyId = company.CompanyId,
                 Name = company.Name,
-                CreationDate = company.CreationDate,
+                CreationDate = company.CreationDate.ToString("MM/dd/yyyy"),
                 Offices = offices
             };
 
@@ -140,6 +141,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CompanyEditBindingModel model)
         {
             if (ModelState.IsValid)
@@ -165,6 +167,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
 

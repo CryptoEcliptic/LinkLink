@@ -11,6 +11,6 @@ namespace LinkLink.App.ViewModels.CompanyViewModels
 
         public string Name { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public string CreationDate { get; set; }
     }
 }

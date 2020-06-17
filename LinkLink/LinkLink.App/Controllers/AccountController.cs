@@ -23,6 +23,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegisterBindingModel model)
         {
             if (ModelState.IsValid)
@@ -56,6 +57,7 @@ namespace LinkLink.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginBindingModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
